@@ -118,5 +118,5 @@ We are actively working on full-stack examples for the next release:
 ---
 
 <p align="center">
-  <i>Curated with ❤️ by a Google DeepMind Trusted Tester.</i>
+  <i>Curated with ❤️ by Pruthvi Geedh.</i>
 </p>
