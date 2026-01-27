@@ -1,0 +1,5 @@
+google-generativeai>=0.4.0
+pillow
+numpy
+openai>=1.0.0
+matplotlib
