@@ -1,4 +1,4 @@
-# Awesome Gemini Robotics ER 1.5 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" align="right" width="100">
+# Gemini Robotics ER 1.5 Insight Hub <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" align="right" width="100">
 
 [![DeepMind](https://img.shields.io/badge/Maintained%20By-Google%20DeepMind%20Trusted%20Tester-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
 [![Gemini 1.5](https://img.shields.io/badge/Model-Gemini%20Robotics%20ER%201.5-blue?style=for-the-badge)](https://aistudio.google.com/)
