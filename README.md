@@ -104,6 +104,7 @@ Use these reference patterns to prompt the model effectively.
 | [`examples/basic_spatial_query.py`](./examples/basic_spatial_query.py) | **Vision** | Get X,Y coords for grasping handles. |
 | [`examples/task_decomposition.py`](./examples/task_decomposition.py) | **Planning** | Break "clean table" into "pick, move, place". |
 | [`examples/tool_use_recycling.py`](./examples/tool_use_recycling.py) | **Agentic** | Search Google to check if plastic is recyclable. |
+| [`examples/video_anomaly_detection.py`](./examples/video_anomaly_detection.py) | **Video** | Audit long robot videos for safety violations. |
 | [`INTERESTING_PROMPTS.md`](./INTERESTING_PROMPTS.md) | **Experiments** | "The Hazmat Navigator", "Grocery Packer", and other advanced prompts. |
 
 ---
