@@ -100,11 +100,17 @@ def main():
                  Image.new('RGB', (640, 480), color = 'gray').save('robot_view.jpg')
 
             if os.path.exists(image_path):
+                # Ask what to detect
+                user_prompt = questionary.text(
+                    "What would you like to detect/find? (Press Enter for 'Detect all humans and robots'):",
+                    default="Detect all humans and robots and return bounding boxes."
+                ).ask()
+
                 basic_spatial_query.robot_perception_query(
                     image_path, 
-                    """Point to the center of the image. 
+                    f"""{user_prompt}
                     Return bounding boxes as a JSON array with labels. 
-                    Format: [{"box_2d": [ymin, xmin, ymax, xmax], "label": "label"}] normalized to 0-1000."""
+                    Format: [{{"box_2d": [ymin, xmin, ymax, xmax], "label": "label"}}] normalized to 0-1000."""
                 )
                 rprint("\n[bold green]✅ Perception Demo Complete[/bold green]")
             else:
