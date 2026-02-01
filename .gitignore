@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.ipynb_checkpoints/
+assets/test1.webp
+output_perception.jpg
+human_vs_humanoid_detection_output.txt
+run_test1.py
