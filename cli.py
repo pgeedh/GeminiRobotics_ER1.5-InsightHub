@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+import os
+import sys
+import time
+from dotenv import load_dotenv
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Prompt, Confirm
+from rich import print as rprint
+import questionary
+
+# Import examples
+# Ensure strict pathing for relative imports if run from root
+sys.path.append(os.path.join(os.path.dirname(__file__), 'examples'))
+
+try:
+    from examples import basic_spatial_query
+    from examples import task_decomposition
+    from examples import tool_use_recycling
+    from examples import video_anomaly_detection
+except ImportError as e:
+    # If package import fails, try direct import (context dependent)
+    try:
+        import basic_spatial_query
+        import task_decomposition
+        import tool_use_recycling
+        import video_anomaly_detection
+    except ImportError:
+        pass # Will handle later or assuming run from root with python -m
+
+load_dotenv()
+console = Console()
+
+def check_api_key():
+    key = os.getenv("GEMINI_API_KEY")
+    if not key or "your_api_key" in key:
+        rprint("[bold red]❌ Warning: GEMINI_API_KEY is not set correctly in .env[/bold red]")
+        rprint("[yellow]Please check your .env file before running these demos.[/yellow]")
+        if not Confirm.ask("Do you want to continue anyway (simulated mode)?"):
+            sys.exit(0)
+        return False
+    return True
+
+def main():
+    console.clear()
+    console.print(Panel.fit(
+        "[bold cyan]🤖 Gemini Robotics ER 1.5 - Insight Hub[/bold cyan]\n"
+        "[white]Early Trusted Tester Interactive Suite[/white]",
+        subtitle="v1.0.0"
+    ))
+
+    check_api_key()
+
+    while True:
+        choice = questionary.select(
+            "Select a Repository Capability to Demo:",
+            choices=[
+                "1. 👁️  Vision & Perception (Spatial Query)",
+                "2. 🧠  Brain & Planning (Task Decomposition)",
+                "3. 🛠️  Agentic Capabilities (Tool Use)",
+                "4. 🛡️  Safety & Auditing (Video Analysis)",
+                "5. Exit"
+            ]
+        ).ask()
+
+        if "Exit" in choice:
+            rprint("[green]Goodbye! 👋[/green]")
+            break
+
+        console.rule(f"[bold]{choice}[/bold]")
+
+        if "Vision" in choice:
+            rprint("[italic]Running: examples/basic_spatial_query.py[/italic]")
+            # Ensure dummy image exists
+            if not os.path.exists("robot_view.jpg"):
+                if os.path.exists("examples/robot_view.jpg"):
+                     # handle path diff
+                     pass
+            
+            basic_spatial_query.robot_perception_query(
+                "robot_view.jpg", 
+                """Point to the center of the image. 
+                Return bounding boxes as a JSON array with labels. 
+                Format: [{"box_2d": [ymin, xmin, ymax, xmax], "label": "label"}] normalized to 0-1000."""
+            )
+            rprint("\n[bold green]✅ Perception Demo Complete[/bold green]")
+
+        elif "Planning" in choice:
+            rprint("[italic]Running: examples/task_decomposition.py[/italic]")
+            command = Prompt.ask("Enter a robot command", default="Find the apple on the kitchen table and throw it away")
+            task_decomposition.plan_mission(command)
+            rprint("\n[bold green]✅ Planning Demo Complete[/bold green]")
+
+        elif "Agentic" in choice:
+            rprint("[italic]Running: examples/tool_use_recycling.py[/italic]")
+            item = Prompt.ask("What object does the robot see?", default="Plastic container with symbol #5")
+            tool_use_recycling.run_agentic_robot(item)
+            rprint("\n[bold green]✅ Agentic Demo Complete[/bold green]")
+
+        elif "Safety" in choice:
+            rprint("[italic]Running: examples/video_anomaly_detection.py[/italic]")
+            video_anomaly_detection.analyze_video_safety(
+                "robot_incident_log_001.mp4",
+                "1. Max speed 0.5m/s. 2. No humans in Red Zone. 3. Grip securely."
+            )
+            rprint("\n[bold green]✅ Safety Demo Complete[/bold green]")
+        
+        input("\nPress Enter to return to menu...")
+        console.clear()
+
+if __name__ == "__main__":
+    main()

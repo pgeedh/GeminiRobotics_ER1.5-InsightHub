@@ -4,3 +4,5 @@ numpy
 openai>=1.0.0
 matplotlib
 python-dotenv
+rich
+questionary
