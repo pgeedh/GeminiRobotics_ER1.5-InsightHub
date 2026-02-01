@@ -52,18 +52,22 @@ def main():
     check_api_key()
 
     while True:
-        choice = questionary.select(
-            "Select a Repository Capability to Demo:",
-            choices=[
-                "1. 👁️  Vision & Perception (Spatial Query)",
-                "2. 🧠  Brain & Planning (Task Decomposition)",
-                "3. 🛠️  Agentic Capabilities (Tool Use)",
-                "4. 🛡️  Safety & Auditing (Video Analysis)",
-                "5. Exit"
-            ]
-        ).ask()
+        try:
+            choice = questionary.select(
+                "Select a Repository Capability to Demo:",
+                choices=[
+                    "1. 👁️  Vision & Perception (Spatial Query)",
+                    "2. 🧠  Brain & Planning (Task Decomposition)",
+                    "3. 🛠️  Agentic Capabilities (Tool Use)",
+                    "4. 🛡️  Safety & Auditing (Video Analysis)",
+                    "5. Exit"
+                ]
+            ).ask()
+        except KeyboardInterrupt:
+            rprint("\n[yellow]Cancelled by user.[/yellow]")
+            break
 
-        if "Exit" in choice:
+        if choice is None or "Exit" in choice:
             rprint("[green]Goodbye! 👋[/green]")
             break
 
@@ -73,15 +77,18 @@ def main():
             rprint("[italic]Running: examples/basic_spatial_query.py[/italic]")
             
             # Allow user to drag and drop or press enter for default
+            # NOTE: Removed only_to_existing=True as it causes compatibility issues with some prompt_toolkit versions
             image_path = questionary.path(
                 "Drag and drop an image file here (or press Enter for default 'robot_view.jpg'):",
-                default="robot_view.jpg",
-                only_to_existing=True
+                default="robot_view.jpg"
             ).ask()
             
+            if image_path is None:
+                rprint("[yellow]Cancelled.[/yellow]")
+                continue
+
             # Handle standard drag-and-drop quoting from some terminals
-            if image_path:
-                image_path = image_path.strip().replace("'", "").replace('"', "")
+            image_path = image_path.strip().replace("'", "").replace('"', "")
             
             if not os.path.exists(image_path) and image_path == "robot_view.jpg":
                  rprint("[yellow]Default 'robot_view.jpg' not found. Creating a dummy one for you...[/yellow]")
