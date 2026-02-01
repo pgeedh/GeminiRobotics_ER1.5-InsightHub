@@ -71,19 +71,33 @@ def main():
 
         if "Vision" in choice:
             rprint("[italic]Running: examples/basic_spatial_query.py[/italic]")
-            # Ensure dummy image exists
-            if not os.path.exists("robot_view.jpg"):
-                if os.path.exists("examples/robot_view.jpg"):
-                     # handle path diff
-                     pass
             
-            basic_spatial_query.robot_perception_query(
-                "robot_view.jpg", 
-                """Point to the center of the image. 
-                Return bounding boxes as a JSON array with labels. 
-                Format: [{"box_2d": [ymin, xmin, ymax, xmax], "label": "label"}] normalized to 0-1000."""
-            )
-            rprint("\n[bold green]✅ Perception Demo Complete[/bold green]")
+            # Allow user to drag and drop or press enter for default
+            image_path = questionary.path(
+                "Drag and drop an image file here (or press Enter for default 'robot_view.jpg'):",
+                default="robot_view.jpg",
+                only_to_existing=True
+            ).ask()
+            
+            # Handle standard drag-and-drop quoting from some terminals
+            if image_path:
+                image_path = image_path.strip().replace("'", "").replace('"', "")
+            
+            if not os.path.exists(image_path) and image_path == "robot_view.jpg":
+                 rprint("[yellow]Default 'robot_view.jpg' not found. Creating a dummy one for you...[/yellow]")
+                 from PIL import Image
+                 Image.new('RGB', (640, 480), color = 'gray').save('robot_view.jpg')
+
+            if os.path.exists(image_path):
+                basic_spatial_query.robot_perception_query(
+                    image_path, 
+                    """Point to the center of the image. 
+                    Return bounding boxes as a JSON array with labels. 
+                    Format: [{"box_2d": [ymin, xmin, ymax, xmax], "label": "label"}] normalized to 0-1000."""
+                )
+                rprint("\n[bold green]✅ Perception Demo Complete[/bold green]")
+            else:
+                 rprint(f"[bold red]❌ Error: Image file '{image_path}' not found.[/bold red]")
 
         elif "Planning" in choice:
             rprint("[italic]Running: examples/task_decomposition.py[/italic]")
