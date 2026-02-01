@@ -29,11 +29,26 @@
 
 ### 1. Installation
 ```bash
-pip install google-genai pillow numpy
+pip install -r requirements.txt
 ```
 
-### 2. Basic Perception Script
-*See [`examples/basic_spatial_query.py`](./examples/basic_spatial_query.py) for the full runnable script.*
+### 2. Run the Interactive Suite
+Instead of running individual scripts, use our new interactive CLI to explore all capabilities:
+```bash
+python cli.py
+```
+*You will be greeted by the Gemini Robotics dashboard where you can select demos:*
+```text
+🤖 Gemini Robotics ER 1.5 - Insight Hub
+   Early Trusted Tester Interactive Suite
+
+? Select a Repository Capability to Demo:
+ » 1. 👁️  Vision & Perception (Spatial Query)
+   2. 🧠  Brain & Planning (Task Decomposition)
+   3. 🛠️  Agentic Capabilities (Tool Use)
+   4. 🛡️  Safety & Auditing (Video Analysis)
+   5. Exit
+```
 
 ```python
 from google import genai
