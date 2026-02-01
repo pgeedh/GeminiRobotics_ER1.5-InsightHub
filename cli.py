@@ -78,7 +78,8 @@ def main():
             
             # Allow user to drag and drop or press enter for default
             # NOTE: Removed only_to_existing=True as it causes compatibility issues with some prompt_toolkit versions
-            image_path = questionary.path(
+            # NOTE: Switched to .text() to avoid questionary.path() compatibility issues with prompt_toolkit
+            image_path = questionary.text(
                 "Drag and drop an image file here (or press Enter for default 'robot_view.jpg'):",
                 default="robot_view.jpg"
             ).ask()
