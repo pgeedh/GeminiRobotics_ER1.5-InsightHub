@@ -37,7 +37,8 @@ Instead of running individual scripts, use our new interactive CLI to explore al
 ```bash
 python cli.py
 ```
-*You will be greeted by the Gemini Robotics dashboard where you can select demos:*
+*You will be greeted by the Gemini Robotics dashboard where you can select demos.*
+*✨ **New:** The CLI supports **drag-and-drop** for image inputs! Just drag your test file into the terminal when prompted.*
 ```text
 🤖 Gemini Robotics ER 1.5 - Insight Hub
    Early Trusted Tester Interactive Suite
