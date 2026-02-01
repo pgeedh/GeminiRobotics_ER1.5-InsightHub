@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import os
 import sys
@@ -43,8 +44,19 @@ def check_api_key():
 
 def main():
     console.clear()
+    console.clear()
+    
+    # Big ASCII Logo for visibility
+    console.print(r"""[bold cyan]
+   ______                _       _ 
+  / ____/___  ____ ___  (_)___  (_)
+ / / __/ __ \/ __ `__ \/ / __ \/ / 
+/ /_/ / /_/ / / / / / / / / / / /  
+\____/\____/_/ /_/ /_/_/_/ /_/_/   
+    R O B O T I C S   E R   1 . 5
+    [/bold cyan]""")
+    
     console.print(Panel.fit(
-        "[bold cyan]🤖 Gemini Robotics ER 1.5 - Insight Hub[/bold cyan]\n"
         "[white]Early Trusted Tester Interactive Suite[/white]",
         subtitle="v1.0.0"
     ))
@@ -103,7 +115,7 @@ def main():
                 # Ask what to detect
                 user_prompt = questionary.text(
                     "What would you like to detect/find? (Press Enter for 'Detect all humans and robots'):",
-                    default="Detect all humans and robots and return bounding boxes."
+                    default="Detect all humans and specific robot models (e.g. Unitree, Tesla) and return bounding boxes."
                 ).ask()
 
                 basic_spatial_query.robot_perception_query(
