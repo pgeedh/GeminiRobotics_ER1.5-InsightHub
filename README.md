@@ -29,24 +29,31 @@
 
 ### 1. Installation
 ```bash
-pip install google-generativeai pillow numpy
+pip install google-genai pillow numpy
 ```
 
 ### 2. Basic Perception Script
 *See [`examples/basic_spatial_query.py`](./examples/basic_spatial_query.py) for the full runnable script.*
 
 ```python
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from PIL import Image
 
-# Initialize the ER 1.5 Preview Model
-model = genai.GenerativeModel('gemini-robotics-er-1.5-preview')
+# Initialize the ER 1.5 Preview Client
+client = genai.Client(api_key="YOUR_API_KEY")
 
 # Ask for precise coordinates
-response = model.generate_content([
-    "Point to the handle of the mug. Return [y, x] coordinates.",
-    Image.open('robot_view.jpg')
-])
+with open('robot_view.jpg', 'rb') as f:
+    image_bytes = f.read()
+
+response = client.models.generate_content(
+    model='gemini-robotics-er-1.5-preview',
+    contents=[
+        types.Part.from_bytes(data=image_bytes, mime_type='image/jpeg'),
+        "Point to the handle of the mug. Return [y, x] coordinates."
+    ]
+)
 print(response.text)
 ```
 
@@ -109,7 +116,7 @@ Use these reference patterns to prompt the model effectively.
 
 ---
 
-## 🔮 Roadmap: Cookbooks & Projects
+## 🔮 Roadmap
 
 We are actively working on full-stack examples for the next release:
 - [ ] **ROS 2 Integration Node**: Drop-in `ros2 run` package.

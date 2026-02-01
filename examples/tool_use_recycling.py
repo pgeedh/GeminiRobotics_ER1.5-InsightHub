@@ -1,6 +1,8 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import os
 import time
+from dotenv import load_dotenv
 
 # -------------------------------------------------------------------------
 # GEMINI ROBOTICS: AGENTIC TOOL USE
@@ -10,9 +12,10 @@ import time
 # ground robot decisions in real-world data.
 # -------------------------------------------------------------------------
 
+load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Mock tool output for demonstration if API isn't fully set up for tools
+# Mock tool output for demonstration
 def mock_search_tool(query):
     print(f"\n[Tool Execution] Searching Google for: '{query}'...")
     time.sleep(1)
@@ -24,9 +27,9 @@ def run_agentic_robot(object_description):
     print(f"🤖 Robot Camera detected: {object_description}")
     print("🤔 Robot Reasoning: I need to decide which bin to put this in.")
     
-    # In a real scenario, you would register the search tool with the model:
-    # tools = [mock_search_tool]
-    # model = genai.GenerativeModel('gemini-1.5-pro', tools=tools)
+    # NOTE: In the new google.genai API, tools are configured slightly differently:
+    # tool = types.Tool(google_search=types.ToolGoogleSearch())
+    # client.models.generate_content(..., config=types.GenerateContentConfig(tools=[tool]))
     
     # For this standalone script, we simulate the 'thought process':
     
@@ -42,8 +45,8 @@ def run_agentic_robot(object_description):
     Decision: Should I put this in 'Recycling' or 'Trash'? Explain briefly.
     """
     
-    print("\n🧠 Gemini Deciding...")
-    # Simulated response as we don't have a live key in this environment often
+    print("\n🧠 Gemini Deciding (Simulated context integration)...")
+    # Simulated response
     print(f"--> Based on search results ('{search_result}'), this item ({object_description}) should go to RECYCLING because it is Polypropylene.")
 
 if __name__ == "__main__":
