@@ -80,9 +80,12 @@ def main():
             # NOTE: Removed only_to_existing=True as it causes compatibility issues with some prompt_toolkit versions
             # NOTE: Switched to .text() to avoid questionary.path() compatibility issues with prompt_toolkit
             image_path = questionary.text(
-                "Drag and drop an image file here (or press Enter for default 'robot_view.jpg'):",
-                default="robot_view.jpg"
+                "Drag and drop an image file here (or press Enter for default 'robot_view.jpg'):"
             ).ask()
+            
+            # If user just hit enter, use default
+            if not image_path:
+                image_path = "robot_view.jpg"
             
             if image_path is None:
                 rprint("[yellow]Cancelled.[/yellow]")
